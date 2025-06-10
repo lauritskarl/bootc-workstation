@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
   packages: write
+  id-token: write
 
 jobs:
   build:
@@ -26,6 +27,10 @@ jobs:
       - name: Checkout repository
         id: checkout
         uses: actions/checkout@v4
+
+      - name: Set up cosign
+        id: cosign
+        uses: sigstore/cosign-installer@main
 
       - name: Build image
         id: build
@@ -50,3 +55,10 @@ jobs:
           registry: ${{ env.REGISTRY }}
           image: ${{ steps.build.outputs.image }}
           tags: ${{ steps.build.outputs.tags }}
+
+      - name: Sign image
+        id: sign
+        run: |
+          cosign sign --yes ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}@${{ steps.push.outputs.digest }}
+        env:
+          COSIGN_EXPERIMENTAL: 1
