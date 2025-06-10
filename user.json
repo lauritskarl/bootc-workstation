@@ -1,0 +1,18 @@
+{
+  "userName": "karl",
+  "realName": "Karl Hans Laurits",
+  "emailAddress": "karl@laurits.dev",
+  "location": "Estonia",
+  "disposition": "regular",
+  "shell": "/usr/bin/fish",
+  "preferredLanguage": "en_US.UTF-8",
+  "storage": "subvolume",
+  "memberOf": [
+    "wheel"
+  ],
+  "luksDiscard": true,
+  "autoResizeMode": "off",
+  "privileged": {
+    "sshAuthorizedKeys": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHyeeE02F2x8EuAC3WaLOx90RLU8g7JB7HHRF0G3eP0M karl@laurits.dev"
+  }
+}
