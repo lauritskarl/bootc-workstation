@@ -1,4 +1,4 @@
-name: Build and push personal workstation image
+name: Build and push image
 
 on:
   schedule:
@@ -11,25 +11,23 @@ permissions:
   contents: read
   packages: write
 
-env:
-  IMAGE_NAME: bootc-workstation
-  CONTAINERFILE: Containerfile
-
-  REGISTRY_USER: ${{ github.actor }}
-  REGISTRY_PASSWORD: ${{ github.token }}
-  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
-
 jobs:
   build:
     name: Build and push image
     runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: bootc-workstation
+      CONTAINERFILE: Containerfile
+      REGISTRY: ghcr.io/${{ github.repository_owner }}
+      REGISTRY_USER: ${{ github.actor }}
+      REGISTRY_PASSWORD: ${{ github.token }}
 
     steps:
       - name: Checkout repository
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Build bootc image
+      - name: Build image
         id: build
         uses: redhat-actions/buildah-build@v2
         with:
@@ -41,14 +39,14 @@ jobs:
         id: auth
         uses: redhat-actions/podman-login@v1
         with:
+          registry: ${{ env.REGISTRY }}
           username: ${{ env.REGISTRY_USER }}
           password: ${{ env.REGISTRY_PASSWORD }}
-          registry: ${{ env.IMAGE_REGISTRY }}
 
       - name: Push to ghcr.io
         id: push
         uses: redhat-actions/push-to-registry@v2
         with:
-          image: ${{ steps.build-image.outputs.image }}
-          tags: ${{ steps.build-image.outputs.tags }}
-          registry: ${{ env.IMAGE_REGISTRY }}
+          registry: ${{ env.REGISTRY }}
+          image: ${{ steps.build.outputs.image }}
+          tags: ${{ steps.build.outputs.tags }}
