@@ -23,7 +23,7 @@ RUN dnf -y install \
   distrobox
 RUN dnf clean all
 RUN systemctl enable \
-  tailscaled.service \
-  docker.socket
+  tailscaled \
+  docker
 RUN systemctl set-default graphical.target
 RUN bootc container lint
