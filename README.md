@@ -24,3 +24,11 @@ run0 podman run \
     --use-librepo=True \
     ghcr.io/lauritskarl/bootc-workstation:latest
 ```
+
+## verify image
+
+```bash
+export COSIGN_CERTIFICATE_OIDC_ISSUER="https://token.actions.githubusercontent.com"
+export COSIGN_CERTIFICATE_IDENTITY="https://github.com/lauritskarl/bootc-workstation/.github/workflows/build.yaml@refs/heads/main"
+cosign verify ghcr.io/lauritskarl/bootc-workstation
+```
