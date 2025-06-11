@@ -1,8 +1,8 @@
 FROM quay.io/fedora/fedora-bootc:latest
 ADD etc etc
 RUN dnf5 -y install 'dnf5-command(config-manager)'
-RUN dnf -y config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
-RUN dnf -y config-manager addrepo --from-repofile=https://mise.jdx.dev/rpm/mise.repo
+RUN dnf -y config-manager addrepo --from-repofile='https://pkgs.tailscale.com/stable/fedora/tailscale.repo'
+RUN dnf -y config-manager addrepo --from-repofile='https://mise.jdx.dev/rpm/mise.repo'
 RUN dnf -y install \
   @workstation-product \
   @gnome-desktop \
