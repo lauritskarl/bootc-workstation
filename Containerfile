@@ -3,6 +3,7 @@ ADD etc etc
 RUN dnf5 -y install 'dnf5-command(config-manager)'
 RUN dnf -y config-manager addrepo --from-repofile='https://pkgs.tailscale.com/stable/fedora/tailscale.repo'
 RUN dnf -y config-manager addrepo --from-repofile='https://mise.jdx.dev/rpm/mise.repo'
+RUN dnf -y copr enable gmaglione/podman-bootc
 RUN dnf -y install \
   @workstation-product \
   @gnome-desktop \
@@ -11,6 +12,7 @@ RUN dnf -y install \
   @printing \
   @container-management \
   podman-docker \
+  podman-bootc \
   firewalld \
   fish \
   tailscale \
